@@ -16,9 +16,12 @@ public class SparkDriver {
 
     public static void main(String[] args) {
 
-//        args = new String[2];
-//        args[0] = "src/main/resources/input.txt";
-//        args[1] = "src/main/resources/output.txt";
+        args = new String[2];
+        args[0] = "src/main/resources/input.txt";
+        args[1] = "src/main/resources/output.txt";
+
+        String input = args[0];
+        String output = args[1];
 
         SparkSession sparkSession = SparkSession
                 .builder()
@@ -27,7 +30,7 @@ public class SparkDriver {
 
         Dataset<Row> df = sparkSession
                 .read()
-                .text(args[0]).as(Encoders.STRING())
+                .text(input).as(Encoders.STRING())
                 .coalesce(1)
                 .flatMap(
                     line -> Arrays.asList(line.split(" ")).iterator(),
@@ -37,7 +40,8 @@ public class SparkDriver {
                 .count();
 
         df.selectExpr("concat(value, ' ', count)").as("result")
-                .write().text(args[1]);
+                .write()
+                .text(output);
 
     }
 
