@@ -1,0 +1,47 @@
+group 'com.ttn'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    provided
+}
+
+sourceSets {
+    main.compileClasspath += configurations.provided
+    test.compileClasspath += configurations.provided
+    test.runtimeClasspath += configurations.provided
+}
+
+dependencies {
+
+    // https://mvnrepository.com/artifact/org.apache.spark/spark-core
+    provided group: 'org.apache.spark', name: 'spark-core_2.11', version: '2.2.1'
+// https://mvnrepository.com/artifact/org.apache.spark/spark-sql
+    provided group: 'org.apache.spark', name: 'spark-sql_2.11', version: '2.2.1'
+
+
+    // hadoop lib for driver
+    provided("org.apache.hadoop:hadoop-client:2.7.1")
+    // hadoop common for map/reduce task
+    provided("org.apache.hadoop:hadoop-common:2.7.1")
+
+    // json library for tweets
+    compile("com.google.code.gson:gson:2.2.4")
+}
+
+
+uploadArchives {
+    repositories {
+        flatDir {
+            dirs 'repos'
+        }
+    }
+}
