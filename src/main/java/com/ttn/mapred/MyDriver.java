@@ -11,9 +11,15 @@ public class MyDriver {
 
     public static void main(String[] args) throws IOException {
 
-        args = new String[2];
-        args[0] = "src/main/resources/input.txt";
-        args[1] = "src/main/resources/output.txt";
+//        args = new String[2];
+//        args[0] = "src/main/resources/input.txt";
+//        args[1] = "src/main/resources/output.txt";
+
+        String input = args[0];
+        String output = args[1];
+
+        System.out.println("input is " + input);
+        System.out.println("output is " + output);
 
         JobConf conf = new JobConf(MyDriver.class);
         conf.setJobName("example-hadoop-job");
@@ -27,8 +33,8 @@ public class MyDriver {
         conf.setInputFormat(TextInputFormat.class);
         conf.setOutputFormat(TextOutputFormat.class);
 
-        FileInputFormat.addInputPath(conf, new Path(args[0]));
-        FileOutputFormat.setOutputPath(conf, new Path(args[1]));
+        FileInputFormat.addInputPath(conf, new Path(input));
+        FileOutputFormat.setOutputPath(conf, new Path(output));
 
         JobClient.runJob(conf);
 
