@@ -4,3 +4,4 @@ out
 build
 spark-warehouse
 *.iml
+pyspark/.ipynb_checkpoints
